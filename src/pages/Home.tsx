@@ -117,8 +117,8 @@ const Home: ComponentType<Props> = (props) => {
                 <h1>Product List</h1>
 
                 <div className="buttons">
-                    <Link to="/addproduct">Add</Link>
-                    <button type="button">Mass delete</button>
+                    <Link to="/addproduct">ADD</Link>
+                    <button id='delete-product-btn' type="button">MASS DELETE</button>
                 </div>
             </div>
             <main className="content">
