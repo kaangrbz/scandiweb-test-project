@@ -1,19 +1,53 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import 'styles/reset.sass';
+import 'styles/index.sass';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+import { createRoot } from 'react-dom/client';
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+import Layout from 'pages/Layout';
+import Loading from 'components/Loading';
+
+const container = document.getElementById('root');
+const Home = lazy(() => import('pages/Home'));
+const NotFound = lazy(() => import('pages/404'));
+const AddProduct = lazy(() => import('pages/AddProduct'));
+
+export default function App() {
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Layout />}>
+                    <Route
+                        path="/"
+                        element={
+                            <Suspense fallback={<Loading />}>
+                                <Home />
+                            </Suspense>
+                        }
+                    />
+                    <Route
+                        path="/addproduct"
+                        element={
+                            <Suspense fallback={<Loading />}>
+                                <AddProduct />
+                            </Suspense>
+                        }
+                    />
+                </Route>
+
+                <Route
+                    path="/*"
+                    element={
+                        <Suspense fallback={<Loading />}>
+                            <NotFound />
+                        </Suspense>
+                    }
+                />
+            </Routes>
+        </BrowserRouter>
+    );
+}
+
+const root = createRoot(container!);
+root.render(<App />);
