@@ -1,4 +1,4 @@
-import React, { ComponentType, useState } from 'react';
+import { ComponentType } from 'react';
 import { Link } from 'react-router-dom';
 
 type Props = {};
@@ -107,7 +107,6 @@ const Home: ComponentType<Props> = (props) => {
                 text = 'Dimesion: ' + specified_value;
                 break;
         }
-
         return text;
     };
 
