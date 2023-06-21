@@ -122,59 +122,76 @@ const AddProduct: ComponentType<Props> = (props) => {
             </div>
             <main className="content">
                 <form id="product_form">
-                    <table className="product-table">
-                        <tr>
-                            <td>SKU</td>
-                            <td>
-                                <input type="text" id="sku" ref={sku_ref} />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Name</td>
-                            <td>
-                                <input type="text" id="name" ref={name_ref} />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Name</td>
-                            <td>
-                                <input type="text" id="name" ref={name_ref} />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Price ($)</td>
-                            <td>
-                                <input type="number" id="price" ref={price_ref} onKeyDown={(e) => ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Type Switcher</td>
-                            <td>
-                                <select
-                                    id="productType"
-                                    ref={type_ref}
-                                    onChange={handleSelectChange}
-                                >
-                                    <option value="dvd" selected>
-                                        Dvd
-                                    </option>
-                                    <option value="book">Book</option>
-                                    <option value="furniture">Furniture</option>
-                                </select>
-                            </td>
-                        </tr>
-                        {specialProperties}
-                        <tr>
-                            <td colSpan={2}>
-                                {typeText}
-                            </td>
-                        </tr>
+                    <table className="product-table w-full">
+                        <tbody>
+                            <tr>
+                                <td>SKU</td>
+                                <td>
+                                    <input
+                                        type="text"
+                                        id="sku"
+                                        placeholder="Enter SKU"
+                                        ref={sku_ref}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Name</td>
+                                <td>
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        placeholder="Enter product name"
+                                        ref={name_ref}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Price ($)</td>
+                                <td>
+                                    <input
+                                        type="number"
+                                        id="price"
+                                        ref={price_ref}
+                                        placeholder="Enter price"
+                                        onKeyDown={(e) =>
+                                            ['e', 'E', '+', '-'].includes(
+                                                e.key
+                                            ) && e.preventDefault()
+                                        }
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Type Switcher</td>
+                                <td>
+                                    <select
+                                        id="productType"
+                                        ref={type_ref}
+                                        onChange={handleSelectChange}
+                                    >
+                                        <option value="" disabled>
+                                            Choose type
+                                        </option>
+                                        <option value="dvd">Dvd</option>
+                                        <option value="book">Book</option>
+                                        <option value="furniture">
+                                            Furniture
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
+                            {specialProperties}
+                            <tr>
+                                <td colSpan={2}>{typeText}</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </form>
             </main>
 
             <hr />
-            
+
             <center>Scandiweb test assignment</center>
         </>
     );
