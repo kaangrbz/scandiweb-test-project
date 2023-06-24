@@ -99,13 +99,32 @@ const AddProduct: ComponentType<Props> = (props) => {
         setSelectedType(type_ref.current?.value ?? '');
     };
 
-    const handleSave = () => {
-        console.log(
-            sku_ref.current?.value,
-            name_ref.current?.value,
-            price_ref.current?.value,
-            type_ref.current?.value
+    const handleSave = async () => {
+        
+        const formdata = new FormData();
+
+        formdata.append('type', 'dvd');
+        formdata.append('sku', sku_ref.current?.value);
+        formdata.append('name', name_ref.current?.value);
+        formdata.append('price', price_ref.current?.value);
+        formdata.append('type', type_ref.current?.value);
+
+        const response = await fetch(
+            `${process.env.REACT_APP_ENDPOINT}/api/add_product.php`,
+            {
+                method: 'POST',
+                body: formdata
+            }
         );
+        
+        const result: {
+            success?: boolean,
+            error?: boolean,
+            code: string,
+            message: string,
+        } = await response.json();
+
+        console.log(result);
     };
 
     return (
@@ -173,11 +192,9 @@ const AddProduct: ComponentType<Props> = (props) => {
                                         <option value="" disabled>
                                             Choose type
                                         </option>
-                                        <option value="dvd">Dvd</option>
+                                        <option value="dvd">DVD</option>
                                         <option value="book">Book</option>
-                                        <option value="furniture">
-                                            Furniture
-                                        </option>
+                                        <option value="furniture">Furniture</option>
                                     </select>
                                 </td>
                             </tr>
