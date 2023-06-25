@@ -68,25 +68,29 @@ const AddProduct = () => {
     setSelectedType(formRef.current?.type.value ?? '');
   };
 
-  const handleSave = async (e: any) => {
+  const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     const formdata = new FormData();
-    const {sku, name, price, type, size, weight, width, height, length} = e.target;
+    const {sku, name, price, type, size, weight, width, height, length} = formRef.current;
 
-    formdata.append('sku', sku.value ?? '');
-    formdata.append('name', name.value ?? '');
-    formdata.append('price', price.value ?? '');
-    formdata.append('type', type.value ?? '');
-    formdata.append('size', size.value ?? '');
-    formdata.append('weight', weight.value ?? '');
-    formdata.append('width', width.value ?? '');
-    formdata.append('height', height.value ?? '');
-    formdata.append('length', length.value ?? '');
+    console.log(formRef.current, formRef.current.sku.value);
+
+    formdata.append('sku', sku?.value ?? '');
+    formdata.append('name', name?.value ?? '');
+    formdata.append('price', price?.value ?? '');
+    formdata.append('type', type?.value ?? '');
+    formdata.append('size', size?.value ?? '');
+    formdata.append('weight', weight?.value ?? '');
+    formdata.append('width', width?.value ?? '');
+    formdata.append('height', height?.value ?? '');
+    formdata.append('length', length?.value ?? '');
 
     const response = await fetch(`${process.env.REACT_APP_ENDPOINT}/api/add_product.php`, {
       method: 'POST',
       body: formdata,
+    }).catch((reason: unknown) => {
+      console.error(reason);
     });
 
     const result: AddProductResult = await response.json();

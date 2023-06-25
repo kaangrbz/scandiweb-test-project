@@ -14,34 +14,33 @@ html {
   flex-direction: row;
   justify-content: space-between;
   border-bottom: 2px solid #000000;
-}
-
-h1 {
-  font-size: 23px;
-}
-
-.buttons {
-  display: flex;
-  gap: 10px;
-
-  > * {
-    font-size: 15px;
-    background: none;
-    transition: 100ms transform box-shadow;
-    cursor: pointer;
-    padding: 4px;
-    border: 2px solid #000;
-    border-radius: 2px;
-    box-shadow: 0px 3px 0px 0px #000;
+  h1 {
+    font-size: 23px;
   }
 
-  &:hover {
-    box-shadow: 0px 3px 0px #2d2d2d !important;
-  }
+  .buttons {
+    display: flex;
+    gap: 10px;
 
-  &:active {
-    box-shadow: none !important;
-    transform: translateY(3px);
+    > * {
+      font-size: 15px;
+      background: none;
+      transition: 100ms transform box-shadow;
+      cursor: pointer;
+      padding: 4px;
+      border: 2px solid #000;
+      border-radius: 2px;
+      box-shadow: 0px 3px 0px 0px #000;
+
+      &:hover {
+        box-shadow: 0px 3px 0px #2d2d2d !important;
+      }
+
+      &:active {
+        box-shadow: none !important;
+        transform: translateY(3px);
+      }
+    }
   }
 }
 

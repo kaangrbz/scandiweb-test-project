@@ -9,18 +9,16 @@ const Home = () => {
 
   useEffect(() => {
     async function run() {
-      const formdata = new FormData();
-      formdata.append('type', 'dvd');
-
-      const response = await fetch(`${process.env.REACT_APP_ENDPOINT}/api/get_product.php`, {
+      const response = await fetch(`${process.env.REACT_APP_ENDPOINT}/api/products.php`, {
         method: 'POST',
-        body: formdata,
+      }).catch((reason: unknown) => {
+        console.error(reason);
       });
 
-      const result: ProductType[] = await response.json();
+      const result: ProductType[] | [] = await response.json();
 
-      if (Array.isArray(result) && result.length > 0) {
-        setProducts(result);
+      if (Array.isArray(result?.data) && result.data.length > 0) {
+        setProducts(result.data);
       }
     }
 
@@ -41,7 +39,24 @@ const Home = () => {
   }, []);
 
   const handleMassDelete = async () => {
-    console.info(selected);
+    const formdata = new FormData();
+    formdata.append('skus', selected);
+
+    const response = await fetch(`${process.env.REACT_APP_ENDPOINT}/api/products.php`, {
+      method: 'DELETE',
+      body: formdata,
+    }).catch((reason: unknown) => {
+      console.error(reason);
+    });
+
+    console.info(selected, response);
+
+    return;
+    const result: ProductType[] = await response.json();
+
+    if (Array.isArray(result) && result.length > 0) {
+      setProducts(result);
+    }
   };
 
   return (
