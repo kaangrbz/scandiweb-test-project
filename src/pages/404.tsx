@@ -1,16 +1,18 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import 'styles/404.sass'
+import {Link} from 'react-router-dom';
+import '../styles/404.scss';
 
-type Props = {}
-
-const NotFound: React.FC = (props: Props) => {
+const NotFound = () => {
   return (
-    <div className='container'>
-        <span>The page that you are tried to go is not found or deleted.</span>
-        <span>Do you want to&nbsp;<Link to='/' className='link'>go home?</Link></span>
+    <div className="container">
+      <span>The page that you are tried to go is not found or deleted.</span>
+      <span>
+        Do you want to&nbsp;
+        <Link to="/" className="link">
+          go home?
+        </Link>
+      </span>
     </div>
-  )
-}
+  );
+};
 
-export default NotFound
+export default NotFound;

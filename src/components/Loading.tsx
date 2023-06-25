@@ -1,12 +1,7 @@
-import React from 'react'
-import 'styles/loading.sass'
+import '../styles/loading.scss';
 
-type Props = {}
+const Loading = () => {
+  return <div className="loading">Loading...</div>;
+};
 
-const Loading: React.FC = (props: Props) => {
-  return (
-    <div className='loading'>Loading</div>
-  )
-}
-
-export default Loading
+export default Loading;

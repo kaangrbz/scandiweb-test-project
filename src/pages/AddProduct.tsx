@@ -1,217 +1,154 @@
-import React, {
-    ComponentType,
-    useRef,
-    useState,
-    useEffect,
-    ReactNode,
-} from 'react';
-import { Link } from 'react-router-dom';
+import {useRef, useState, useEffect, ReactNode} from 'react';
 
-type Props = {};
+import {Link} from 'react-router-dom';
+import {AddProductResult} from '../types';
 
-const AddProduct: ComponentType<Props> = (props) => {
-    const sku_ref = useRef<HTMLInputElement>(null);
-    const name_ref = useRef<HTMLInputElement>(null);
-    const price_ref = useRef<HTMLInputElement>(null);
-    const type_ref = useRef<HTMLSelectElement>(null);
-    const size_ref = useRef<HTMLInputElement>(null);
-    const weight_ref = useRef<HTMLInputElement>(null);
-    const height_ref = useRef<HTMLInputElement>(null);
-    const width_ref = useRef<HTMLInputElement>(null);
-    const length_ref = useRef<HTMLInputElement>(null);
-    const [selectedType, setSelectedType] = useState<String>();
-    const [typeText, setTypeText] = useState<String>('');
-    const [specialProperties, setSpecialProperties] = useState<ReactNode>();
+const AddProduct = () => {
+  const formRef = useRef<HTMLFormElement>(null);
 
-    useEffect(() => {
-        switch (type_ref.current?.value) {
-            case 'dvd':
-                setSpecialProperties(
-                    <>
-                        <tr>
-                            <td>Size (MB)</td>
-                            <td>
-                                <input type="number" id="size" ref={size_ref} />
-                            </td>
-                        </tr>
-                    </>
-                );
-                setTypeText('Please enter megabyte value of dvd');
-                break;
-            case 'furniture':
-                setSpecialProperties(
-                    <>
-                        <tr>
-                            <td>Height (CM)</td>
-                            <td>
-                                <input
-                                    type="number"
-                                    id="height"
-                                    ref={height_ref}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Width (CM)</td>
-                            <td>
-                                <input
-                                    type="number"
-                                    id="width"
-                                    ref={width_ref}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Length (CM)</td>
-                            <td>
-                                <input
-                                    type="number"
-                                    id="length"
-                                    ref={length_ref}
-                                />
-                            </td>
-                        </tr>
-                    </>
-                );
-                setTypeText('Please provide dimensions in HxWxL format.');
-                break;
-            case 'book':
-                setSpecialProperties(
-                    <>
-                        <tr>
-                            <td>Weight (kg)</td>
-                            <td>
-                                <input
-                                    type="number"
-                                    id="weight"
-                                    ref={weight_ref}
-                                />
-                            </td>
-                        </tr>
-                    </>
-                );
-                setTypeText('Please enter kilogram value of book');
-                break;
-        }
-    }, [selectedType]);
+  const [selectedType, setSelectedType] = useState<string>();
+  const [typeText, setTypeText] = useState<string>('');
+  const [specialProperties, setSpecialProperties] = useState<ReactNode>();
 
-    const handleSelectChange = () => {
-        setSelectedType(type_ref.current?.value ?? '');
-    };
-
-    const handleSave = async () => {
-        
-        const formdata = new FormData();
-
-        formdata.append('type', 'dvd');
-        formdata.append('sku', sku_ref.current?.value);
-        formdata.append('name', name_ref.current?.value);
-        formdata.append('price', price_ref.current?.value);
-        formdata.append('type', type_ref.current?.value);
-
-        const response = await fetch(
-            `${process.env.REACT_APP_ENDPOINT}/api/add_product.php`,
-            {
-                method: 'POST',
-                body: formdata
-            }
+  useEffect(() => {
+    switch (formRef.current?.type.value) {
+      case 'dvd':
+        setSpecialProperties(
+          <tr>
+            <td>Size (MB)</td>
+            <td>
+              <input type="number" id="size" name="size" />
+            </td>
+          </tr>,
         );
-        
-        const result: {
-            success?: boolean,
-            error?: boolean,
-            code: string,
-            message: string,
-        } = await response.json();
+        setTypeText('Please enter megabyte value of dvd');
+        break;
+      case 'furniture':
+        setSpecialProperties(
+          <>
+            <tr>
+              <td>Height (CM)</td>
+              <td>
+                <input type="number" id="height" name="height" />
+              </td>
+            </tr>
+            <tr>
+              <td>Width (CM)</td>
+              <td>
+                <input type="number" id="width" name="width" />
+              </td>
+            </tr>
+            <tr>
+              <td>Length (CM)</td>
+              <td>
+                <input type="number" id="length" name="length" />
+              </td>
+            </tr>
+          </>,
+        );
+        setTypeText('Please provide dimensions in HxWxL format.');
+        break;
+      case 'book':
+        setSpecialProperties(
+          <tr>
+            <td>Weight (kg)</td>
+            <td>
+              <input type="number" id="weight" name="weight" />
+            </td>
+          </tr>,
+        );
+        setTypeText('Please enter kilogram value of book');
+        break;
+      default:
+        break;
+    }
+  }, [selectedType]);
 
-        console.log(result);
-    };
+  const handleSelectChange = () => {
+    setSelectedType(formRef.current?.type.value ?? '');
+  };
 
-    return (
-        <>
-            <div className="toolbar">
-                <h1>Product Add</h1>
+  const handleSave = async (e: any) => {
+    e.preventDefault();
 
-                <div className="buttons">
-                    <button type="button" onClick={handleSave}>
-                        Save
-                    </button>
-                    <Link to="/">Cancel</Link>
-                </div>
-            </div>
-            <main className="content">
-                <form id="product_form">
-                    <table className="product-table w-full">
-                        <tbody>
-                            <tr>
-                                <td>SKU</td>
-                                <td>
-                                    <input
-                                        type="text"
-                                        id="sku"
-                                        placeholder="Enter SKU"
-                                        ref={sku_ref}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Name</td>
-                                <td>
-                                    <input
-                                        type="text"
-                                        id="name"
-                                        placeholder="Enter product name"
-                                        ref={name_ref}
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Price ($)</td>
-                                <td>
-                                    <input
-                                        type="number"
-                                        id="price"
-                                        ref={price_ref}
-                                        placeholder="Enter price"
-                                        onKeyDown={(e) =>
-                                            ['e', 'E', '+', '-'].includes(
-                                                e.key
-                                            ) && e.preventDefault()
-                                        }
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Type Switcher</td>
-                                <td>
-                                    <select
-                                        id="productType"
-                                        ref={type_ref}
-                                        onChange={handleSelectChange}
-                                    >
-                                        <option value="" disabled>
-                                            Choose type
-                                        </option>
-                                        <option value="dvd">DVD</option>
-                                        <option value="book">Book</option>
-                                        <option value="furniture">Furniture</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            {specialProperties}
-                            <tr>
-                                <td colSpan={2}>{typeText}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </form>
-            </main>
+    const formdata = new FormData();
+    const {sku, name, price, type, size, weight, width, height, length} = e.target;
 
-            <hr />
+    formdata.append('sku', sku.value ?? '');
+    formdata.append('name', name.value ?? '');
+    formdata.append('price', price.value ?? '');
+    formdata.append('type', type.value ?? '');
+    formdata.append('size', size.value ?? '');
+    formdata.append('weight', weight.value ?? '');
+    formdata.append('width', width.value ?? '');
+    formdata.append('height', height.value ?? '');
+    formdata.append('length', length.value ?? '');
 
-            <center>Scandiweb test assignment</center>
-        </>
-    );
+    const response = await fetch(`${process.env.REACT_APP_ENDPOINT}/api/add_product.php`, {
+      method: 'POST',
+      body: formdata,
+    });
+
+    const result: AddProductResult = await response.json();
+
+    if (result.error) {
+      console.error(result.message);
+    }
+  };
+
+  return (
+    <form id="product_form" ref={formRef} onSubmit={handleSave}>
+      <div className="toolbar">
+        <h1>Product Add</h1>
+
+        <div className="buttons">
+          <button type="submit">Save</button>
+          <Link to="/">Cancel</Link>
+        </div>
+      </div>
+      <main className="content">
+        <table className="product-table w-full">
+          <tbody>
+            <tr>
+              <td>SKU</td>
+              <td>
+                <input type="text" id="sku" placeholder="Enter SKU" name="sku" />
+              </td>
+            </tr>
+            <tr>
+              <td>Name</td>
+              <td>
+                <input type="text" id="name" placeholder="Enter product name" name="name" />
+              </td>
+            </tr>
+            <tr>
+              <td>Price ($)</td>
+              <td>
+                <input type="number" id="price" name="price" placeholder="Enter price" />
+              </td>
+            </tr>
+            <tr>
+              <td>Type Switcher</td>
+              <td>
+                <select id="productType" name="type" onChange={handleSelectChange}>
+                  <option value="" disabled>
+                    Choose type
+                  </option>
+                  <option value="dvd">DVD</option>
+                  <option value="book">Book</option>
+                  <option value="furniture">Furniture</option>
+                </select>
+              </td>
+            </tr>
+            {specialProperties}
+            <tr>
+              <td colSpan={2}>{typeText}</td>
+            </tr>
+          </tbody>
+        </table>
+      </main>
+    </form>
+  );
 };
 
 export default AddProduct;
