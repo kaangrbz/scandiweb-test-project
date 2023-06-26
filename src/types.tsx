@@ -16,3 +16,15 @@ export type AddProductResult = {
   code: string;
   message: string;
 };
+
+export interface AddProductForm {
+  sku: string;
+  name: string;
+  type: string;
+  price: string;
+  size: string;
+  weight: string;
+  width: string;
+  height: string;
+  length: string;
+}

@@ -7,16 +7,22 @@ const Home = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [selected, setSelected] = useState<string[]>([]);
 
-  useEffect(() => {
-    async function run() {
-      const response = await fetch(`${process.env.REACT_APP_ENDPOINT}/api/products.php`, {
+  const getData = async () => {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_ENDPOINT}/api/products.php`, {
         method: 'POST',
-      }).catch((reason: unknown) => {
-        console.error(reason);
       });
 
-      const result: ProductType[] | [] = await response.json();
+      return await res.json();
+    } catch (error) {
+      console.error(error);
+      return error;
+    }
+  };
 
+  useEffect(() => {
+    async function run() {
+      const result = await getData();
       if (Array.isArray(result?.data) && result.data.length > 0) {
         setProducts(result.data);
       }
@@ -25,37 +31,50 @@ const Home = () => {
     run();
   }, []);
 
-  const onToggleProduct = useCallback((sku: string) => {
-    setSelected((prev) => {
-      if (prev.includes(sku)) {
-        const index = prev.indexOf(sku);
-        prev.splice(index, 1);
-      } else {
-        prev.push(sku);
-      }
+  // TODO: check for getting selected items
+  const onToggleProduct = useCallback(
+    (sku: string) => {
+      setSelected(() => {
+        if (selected.includes(sku)) {
+          selected.splice(selected.indexOf(sku), 1);
+        } else {
+          selected.push(sku);
+        }
+        return selected;
+      });
+    },
+    [selected],
+  );
 
-      return prev;
-    });
-  }, []);
-
+  // TODO: body json yap
+  // TODO: mass delete backendini yap ve test et
   const handleMassDelete = async () => {
-    const formdata = new FormData();
-    formdata.append('skus', selected);
+    if (selected.length <= 0) {
+      return;
+    }
 
-    const response = await fetch(`${process.env.REACT_APP_ENDPOINT}/api/products.php`, {
-      method: 'DELETE',
-      body: formdata,
-    }).catch((reason: unknown) => {
-      console.error(reason);
+    const skus = selected.map((sku) => {
+      if (sku === selected.at(-1)) return `'${sku}'`;
+      return `'${sku}',`;
     });
 
-    console.info(selected, response);
+    const data = {
+      skus: skus.join(''),
+    };
 
-    return;
-    const result: ProductType[] = await response.json();
+    try {
+      const res = await fetch(`${process.env.REACT_APP_ENDPOINT}/api/products.php`, {
+        method: 'DELETE',
+        body: JSON.stringify(data),
+      });
 
-    if (Array.isArray(result) && result.length > 0) {
-      setProducts(result);
+      if (res.status === 200) {
+        setProducts((prev) => {
+          return prev.filter((product) => !selected.includes(product.sku));
+        });
+      }
+    } catch (error: unknown) {
+      console.error(error);
     }
   };
 
