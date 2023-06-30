@@ -1,6 +1,7 @@
 import {useEffect, useState, useCallback} from 'react';
 import {Link} from 'react-router-dom';
 import Product from '../components/Product';
+
 import {ProductType} from '../types';
 
 const Home = () => {
@@ -13,7 +14,7 @@ const Home = () => {
         method: 'POST',
       });
 
-      return await res.json();
+      return res.json();
     } catch (error) {
       console.error(error);
       return error;
@@ -21,30 +22,25 @@ const Home = () => {
   };
 
   useEffect(() => {
-    async function run() {
+    (async () => {
       const result = await getData();
       if (Array.isArray(result?.data) && result.data.length > 0) {
         setProducts(result.data);
       }
-    }
-
-    run();
+    })();
   }, []);
 
   // TODO: check for getting selected items
-  const onToggleProduct = useCallback(
-    (sku: string) => {
-      setSelected(() => {
-        if (selected.includes(sku)) {
-          selected.splice(selected.indexOf(sku), 1);
-        } else {
-          selected.push(sku);
-        }
-        return selected;
-      });
-    },
-    [selected],
-  );
+  const onToggleProduct = useCallback((sku: string) => {
+    setSelected((prev) => {
+      console.log(prev);
+      if (prev.includes(sku)) {
+        return prev.filter((item) => item !== sku);
+      }
+
+      return [...prev, sku];
+    });
+  }, []);
 
   // TODO: body json yap
   // TODO: mass delete backendini yap ve test et
@@ -53,13 +49,10 @@ const Home = () => {
       return;
     }
 
-    const skus = selected.map((sku) => {
-      if (sku === selected.at(-1)) return `'${sku}'`;
-      return `'${sku}',`;
-    });
+    const skus = selected.map((sku) => `'${sku}'`).join(',');
 
     const data = {
-      skus: skus.join(''),
+      skus,
     };
 
     try {

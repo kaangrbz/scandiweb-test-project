@@ -1,25 +1,19 @@
-import {useId, useMemo, memo} from 'react';
+import {useId, memo} from 'react';
 import {ProductType} from '../types';
 
-type Props = {product: ProductType; onToggleProduct: (sku: string) => void};
+type Props = {
+  product: ProductType;
+  onToggleProduct: (sku: string) => void;
+};
 
-const Product = (props: Props) => {
-  const {product, onToggleProduct} = props;
-
+const Product = ({product, onToggleProduct}: Props) => {
   const inputId = useId();
 
-  const specifiedValue = useMemo(() => {
-    switch (product.type) {
-      case 'dvd':
-        return `Size: ${product.size} mb`;
-      case 'book':
-        return `Weight: ${product.weight}kg`;
-      case 'furniture':
-        return `Dimensions: ${product.width}x${product.height}x${product.length}`;
-      default:
-        return '';
-    }
-  }, [product]);
+  let specifiedValue = '';
+  if (product.type === 'dvd') specifiedValue = `Size: ${product.size} mb`;
+  else if (product.type === 'book') specifiedValue = `Weight: ${product.weight}kg`;
+  else if (product.type === 'furniture')
+    specifiedValue = `Dimensions: ${product.width}x${product.height}x${product.length}`;
 
   return (
     <span className="product">

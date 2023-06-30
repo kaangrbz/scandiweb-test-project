@@ -1,41 +1,28 @@
-import React from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import {Formik, Form, Field, ErrorMessage} from 'formik';
-
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {AddProductForm} from '../types';
 
 const AddProduct = () => {
+  const navigate = useNavigate();
   const initialValues: AddProductForm = {
     sku: '',
     name: '',
-    price: '',
     type: 'dvd',
-    size: '',
-    weight: '',
-    width: '',
-    height: '',
-    length: '',
+    price: 0,
+    size: 0,
+    weight: 0,
+    width: 0,
+    height: 0,
+    length: 0,
   };
 
   const handleSave = async (values: AddProductForm) => {
-    const data = {
-      sku: values.sku,
-      name: values.name,
-      type: values.type,
-      price: values.price,
-      size: values.size,
-      weight: values.weight,
-      width: values.width,
-      height: values.height,
-      length: values.length,
-    };
-
     try {
       await fetch(`${process.env.REACT_APP_ENDPOINT}/api/products.php`, {
         method: 'PUT',
-        body: JSON.stringify(data),
+        body: JSON.stringify(values),
       });
+      navigate('/');
     } catch (error) {
       console.error(error);
     }
@@ -45,26 +32,23 @@ const AddProduct = () => {
     <Formik
       initialValues={initialValues}
       validate={(values) => {
-        const errors: {sku?: string} = {};
+        const errors: {sku?: string; name?: string; price?: string; type?: string} = {};
         if (!values.sku) {
-          errors.sku = 'Required sku';
+          errors.sku = 'Please enter sku';
+        } else if (!values.name) {
+          errors.name = 'Please enter name';
+        } else if (!values.price.toString()) {
+          errors.price = 'Please enter price';
+        } else if (Number(values.price) < 0) {
+          errors.price = 'Enter valid price';
+        } else if (!values.type) {
+          errors.type = 'Please select type';
         }
         return errors;
       }}
-      onSubmit={(values, {setSubmitting}) => {
-        handleSave(values);
-        setTimeout(() => {
-          setSubmitting(false);
-        }, 400);
-      }}
+      onSubmit={handleSave}
     >
-      {({values, setValues, isSubmitting}) => {
-        const handleSelectChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-          const {value} = event.target;
-          const newValues = {...values, type: value};
-          setValues(newValues);
-        };
-
+      {({values, isSubmitting}) => {
         return (
           <Form id="product_form">
             <div className="toolbar">
@@ -91,18 +75,20 @@ const AddProduct = () => {
                     <td>Name</td>
                     <td>
                       <Field type="text" id="name" name="name" placeholder="Enter product name" />
+                      <ErrorMessage name="name" className="no-border" component="div" />
                     </td>
                   </tr>
                   <tr>
                     <td>Price ($)</td>
                     <td>
                       <Field type="number" id="price" name="price" placeholder="Enter price" />
+                      <ErrorMessage name="price" className="no-border" component="div" />
                     </td>
                   </tr>
                   <tr>
                     <td>Type Switcher</td>
                     <td>
-                      <Field as="select" id="productType" name="type" onChange={handleSelectChange}>
+                      <Field as="select" id="productType" name="type">
                         <option value="" disabled>
                           Choose type
                         </option>
@@ -110,6 +96,7 @@ const AddProduct = () => {
                         <option value="book">Book</option>
                         <option value="furniture">Furniture</option>
                       </Field>
+                      <ErrorMessage name="type" className="no-border" component="div" />
                     </td>
                   </tr>
                   {values.type === 'dvd' && (
