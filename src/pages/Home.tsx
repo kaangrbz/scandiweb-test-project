@@ -74,7 +74,8 @@ const Home = () => {
     <>
       <div className="toolbar">
         <h1>
-          Product List {process.env.REACT_APP_ENDPOINT} {process.env.REACT_APP_ENDPOINT.length}
+          Product List{' '}
+          {process.env.REACT_APP_ENDPOINT ? process.env.REACT_APP_ENDPOINT : 'undefined'}
         </h1>
 
         <div className="buttons">
