@@ -1,8 +1,11 @@
 import {useEffect, useState, useCallback} from 'react';
 import {Link} from 'react-router-dom';
 import Product from '../components/Product';
+import dotenv from 'dotenv';
 
 import {ProductType} from '../types';
+
+dotenv.config();
 
 const Home = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
