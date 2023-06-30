@@ -33,7 +33,6 @@ const Home = () => {
   // TODO: check for getting selected items
   const onToggleProduct = useCallback((sku: string) => {
     setSelected((prev) => {
-      console.log(prev);
       if (prev.includes(sku)) {
         return prev.filter((item) => item !== sku);
       }
