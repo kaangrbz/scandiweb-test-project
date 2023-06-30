@@ -1,9 +1,6 @@
 import {Formik, Form, Field, ErrorMessage} from 'formik';
 import {Link, useNavigate} from 'react-router-dom';
-import dotenv from 'dotenv';
 import {AddProductForm} from '../types';
-
-dotenv.config();
 
 const AddProduct = () => {
   const navigate = useNavigate();
