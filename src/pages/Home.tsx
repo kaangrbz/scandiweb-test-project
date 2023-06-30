@@ -73,7 +73,9 @@ const Home = () => {
   return (
     <>
       <div className="toolbar">
-        <h1>Product List {process.env.REACT_APP_ENDPOINT}</h1>
+        <h1>
+          Product List {process.env.REACT_APP_ENDPOINT} {process.env.REACT_APP_ENDPOINT.length}
+        </h1>
 
         <div className="buttons">
           <Link to="/addproduct">ADD</Link>
