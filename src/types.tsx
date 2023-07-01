@@ -1,7 +1,7 @@
 export type ProductType = {
   sku: string;
   name: string;
-  type: string;
+  type: 'dvd' | 'book' | 'furniture';
   price: number;
   size?: number;
   weight?: number;

@@ -61,9 +61,7 @@ const Home = () => {
       });
 
       if (res.status === 200) {
-        setProducts((prev) => {
-          return prev.filter((product) => !selected.includes(product.sku));
-        });
+        setProducts((prev) => prev.filter((product) => !selected.includes(product.sku)));
       }
     } catch (error: unknown) {
       console.error(error);
