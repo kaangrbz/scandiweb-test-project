@@ -1,4 +1,4 @@
-import './styles/reset.scss';
+import './styles/_reset.scss';
 import './styles/index.scss';
 
 import {BrowserRouter, Routes, Route} from 'react-router-dom';

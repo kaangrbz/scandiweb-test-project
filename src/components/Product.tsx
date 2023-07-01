@@ -4,9 +4,10 @@ import {ProductType} from '../types';
 type Props = {
   product: ProductType;
   onToggleProduct: (sku: string) => void;
+  checked: boolean;
 };
 
-const Product = ({product, onToggleProduct}: Props) => {
+const Product = ({product, onToggleProduct, checked}: Props) => {
   const inputId = useId();
 
   let specifiedValue = '';
@@ -23,6 +24,7 @@ const Product = ({product, onToggleProduct}: Props) => {
             type="checkbox"
             id={inputId}
             className="delete-checkbox"
+            checked={checked}
             onChange={() => {
               onToggleProduct(product.sku);
             }}
@@ -33,7 +35,7 @@ const Product = ({product, onToggleProduct}: Props) => {
       <div className="product-content">
         <div>{product.sku}</div>
         <div>{product.name}</div>
-        <div>{product.price} $</div>
+        <div>{product.price.toFixed(2)} $</div>
         <div>{specifiedValue}</div>
       </div>
     </span>

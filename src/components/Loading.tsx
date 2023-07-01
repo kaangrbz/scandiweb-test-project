@@ -1,4 +1,4 @@
-import '../styles/loading.scss';
+import '../styles/_loading.scss';
 
 const Loading = () => {
   return <div className="loading">Loading...</div>;

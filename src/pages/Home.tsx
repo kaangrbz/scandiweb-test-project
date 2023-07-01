@@ -30,29 +30,23 @@ const Home = () => {
     })();
   }, []);
 
-  // TODO: check for getting selected items
   const onToggleProduct = useCallback((sku: string) => {
     setSelected((prev) => {
       if (prev.includes(sku)) {
         return prev.filter((item) => item !== sku);
       }
-
       return [...prev, sku];
     });
   }, []);
 
-  // TODO: body json yap
-  // TODO: mass delete backendini yap ve test et
   const handleMassDelete = async () => {
     if (selected.length <= 0) {
       return;
     }
 
+    // TODO: make this at backend. send array
     const skus = selected.map((sku) => `'${sku}'`).join(',');
-
-    const data = {
-      skus,
-    };
+    const data = {skus};
 
     try {
       const res = await fetch(`${process.env.REACT_APP_ENDPOINT}/api/products.php`, {
@@ -84,7 +78,12 @@ const Home = () => {
         <div className="products">
           {products.length > 0
             ? products.map((product) => (
-                <Product key={product.sku} product={product} onToggleProduct={onToggleProduct} />
+                <Product
+                  key={product.sku}
+                  product={product}
+                  checked={selected.includes(product.sku)}
+                  onToggleProduct={onToggleProduct}
+                />
               ))
             : 'No product added.'}
         </div>

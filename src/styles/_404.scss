@@ -1,7 +1,9 @@
+@import './_functions';
+
 .container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: rem(10px);
   width: 100%;
-  padding: 30px;
+  padding: rem(30px);
 }
