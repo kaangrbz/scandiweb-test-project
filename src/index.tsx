@@ -1,5 +1,5 @@
-import './styles/_reset.scss';
 import './styles/index.scss';
+import '@csstools/normalize.css';
 
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import {lazy, Suspense} from 'react';
@@ -49,7 +49,6 @@ const App = () => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-const root = createRoot(document.getElementById('root')!);
-root.render(<App />);
+createRoot(document.getElementById('root')!).render(<App />);
 
 export default App;

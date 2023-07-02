@@ -1,4 +1,4 @@
-import {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {Link} from 'react-router-dom';
 import Product from '../components/Product';
 
@@ -7,6 +7,7 @@ import {ProductType} from '../types';
 const Home = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [selected, setSelected] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const getData = async () => {
     try {
@@ -27,6 +28,7 @@ const Home = () => {
       if (Array.isArray(result?.data) && result.data.length > 0) {
         setProducts(result.data);
       }
+      setIsLoading(false);
     })();
   }, []);
 
@@ -44,8 +46,7 @@ const Home = () => {
       return;
     }
 
-    // TODO: make this at backend. send array
-    const skus = selected.map((sku) => `'${sku}'`).join(',');
+    const skus = selected.map((sku) => `'${sku}'`);
     const data = {skus};
 
     try {
@@ -56,11 +57,31 @@ const Home = () => {
 
       if (res.status === 200) {
         setProducts((prev) => prev.filter((product) => !selected.includes(product.sku)));
+        setSelected([]);
       }
     } catch (error: unknown) {
       console.error(error);
     }
   };
+
+  let content: React.ReactNode;
+  if (isLoading) {
+    content = <div>Loading products</div>;
+  } else {
+    content =
+      products.length > 0 ? (
+        products.map((product) => (
+          <Product
+            key={product.sku}
+            product={product}
+            checked={selected.includes(product.sku)}
+            onToggleProduct={onToggleProduct}
+          />
+        ))
+      ) : (
+        <div>No product added.</div>
+      );
+  }
 
   return (
     <>
@@ -75,18 +96,7 @@ const Home = () => {
         </div>
       </div>
       <main className="content">
-        <div className="products">
-          {products.length > 0
-            ? products.map((product) => (
-                <Product
-                  key={product.sku}
-                  product={product}
-                  checked={selected.includes(product.sku)}
-                  onToggleProduct={onToggleProduct}
-                />
-              ))
-            : 'No product added.'}
-        </div>
+        <div className="products">{content}</div>
       </main>
     </>
   );

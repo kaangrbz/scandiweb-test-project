@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@csstools/normalize.css": "^12.0.0",
     "formik": "^2.4.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -48,7 +49,7 @@
     "format:check": "prettier -c \"src/**/*.{ts,tsx}\"",
     "lint:check": "eslint \"src/**/*.{ts,tsx}\"",
     "ts:check": "tsc --noEmit",
-    "check": "yarn format && yarn format:check && yarn lint:check && yarn ts:check"
+    "fullcheck": "yarn format && yarn format:check && yarn lint:check && yarn ts:check"
   },
   "eslintConfig": {
     "extends": [

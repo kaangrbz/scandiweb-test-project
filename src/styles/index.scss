@@ -10,17 +10,19 @@ body,
 html {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: var(--main-text-color);
 }
 
 .toolbar {
-  height: rem(30px);
-  padding: 15px 15%;
+  padding: rem(16px) 15%;
   display: flex;
   flex-direction: row;
+  gap: 5px;
   justify-content: space-between;
   border-bottom: 2px solid var(--secondary-color);
 
   h1 {
+    margin: 0px;
     font-size: rem(25px);
   }
 
@@ -29,6 +31,8 @@ html {
     gap: rem(10px);
 
     > * {
+      text-decoration: none !important;
+      color: var(--main-text-color);
       font-size: rem(15px);
       background: none;
       transition: 100ms transform box-shadow;
