@@ -67,21 +67,39 @@ const AddProduct = () => {
                   <tr>
                     <td>SKU</td>
                     <td>
-                      <Field type="text" id="sku" name="sku" placeholder="Enter SKU" inputmode="text" />
+                      <Field
+                        type="text"
+                        id="sku"
+                        name="sku"
+                        placeholder="Enter SKU"
+                        inputmode="text"
+                      />
                       <ErrorMessage name="sku" className="no-border" component="div" />
                     </td>
                   </tr>
                   <tr>
                     <td>Name</td>
                     <td>
-                      <Field type="text" id="name" name="name" placeholder="Enter product name" inputmode="text" />
+                      <Field
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter product name"
+                        inputmode="text"
+                      />
                       <ErrorMessage name="name" className="no-border" component="div" />
                     </td>
                   </tr>
                   <tr>
                     <td>Price ($)</td>
                     <td>
-                      <Field type="number" id="price" name="price" placeholder="Enter price" inputmode="decimal" />
+                      <Field
+                        type="number"
+                        id="price"
+                        name="price"
+                        placeholder="Enter price"
+                        inputmode="decimal"
+                      />
                       <ErrorMessage name="price" className="no-border" component="div" />
                     </td>
                   </tr>
