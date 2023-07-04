@@ -67,21 +67,21 @@ const AddProduct = () => {
                   <tr>
                     <td>SKU</td>
                     <td>
-                      <Field type="text" id="sku" name="sku" placeholder="Enter SKU" />
+                      <Field type="text" id="sku" name="sku" placeholder="Enter SKU" inputmode="text" />
                       <ErrorMessage name="sku" className="no-border" component="div" />
                     </td>
                   </tr>
                   <tr>
                     <td>Name</td>
                     <td>
-                      <Field type="text" id="name" name="name" placeholder="Enter product name" />
+                      <Field type="text" id="name" name="name" placeholder="Enter product name" inputmode="text" />
                       <ErrorMessage name="name" className="no-border" component="div" />
                     </td>
                   </tr>
                   <tr>
                     <td>Price ($)</td>
                     <td>
-                      <Field type="number" id="price" name="price" placeholder="Enter price" />
+                      <Field type="number" id="price" name="price" placeholder="Enter price" inputmode="decimal" />
                       <ErrorMessage name="price" className="no-border" component="div" />
                     </td>
                   </tr>
@@ -104,7 +104,7 @@ const AddProduct = () => {
                       <tr>
                         <td>Size (MB)</td>
                         <td>
-                          <Field type="number" id="size" name="size" />
+                          <Field type="number" id="size" name="size" inputmode="numeric" />
                         </td>
                       </tr>
 
@@ -119,7 +119,7 @@ const AddProduct = () => {
                       <tr>
                         <td>Weight (kg)</td>
                         <td>
-                          <Field type="number" id="weight" name="weight" />
+                          <Field type="number" id="weight" name="weight" inputmode="numeric" />
                         </td>
                       </tr>
 
@@ -134,19 +134,19 @@ const AddProduct = () => {
                       <tr>
                         <td>Height (CM)</td>
                         <td>
-                          <Field type="number" id="height" name="height" />
+                          <Field type="number" id="height" name="height" inputmode="numeric" />
                         </td>
                       </tr>
                       <tr>
                         <td>Width (CM)</td>
                         <td>
-                          <Field type="number" id="width" name="width" />
+                          <Field type="number" id="width" name="width" inputmode="numeric" />
                         </td>
                       </tr>
                       <tr>
                         <td>Length (CM)</td>
                         <td>
-                          <Field type="number" id="length" name="length" />
+                          <Field type="number" id="length" name="length" inputmode="numeric" />
                         </td>
                       </tr>
                       <tr>

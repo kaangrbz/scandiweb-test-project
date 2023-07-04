@@ -11,3 +11,9 @@ export type ProductType = {
 };
 
 export type AddProductForm = Required<ProductType>;
+
+export type ProductProps = {
+  product: ProductType;
+  onToggleProduct: (sku: string) => void;
+  checked: boolean;
+};

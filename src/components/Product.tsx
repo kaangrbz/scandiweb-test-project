@@ -1,13 +1,7 @@
 import {useId, memo} from 'react';
-import {ProductType} from '../types';
+import {ProductProps} from '../types';
 
-type Props = {
-  product: ProductType;
-  onToggleProduct: (sku: string) => void;
-  checked: boolean;
-};
-
-const Product = ({product, onToggleProduct, checked}: Props) => {
+const Product = ({product, onToggleProduct, checked}: ProductProps) => {
   const inputId = useId();
 
   let specifiedValue = '';
