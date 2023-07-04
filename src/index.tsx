@@ -7,8 +7,8 @@ import {createRoot} from 'react-dom/client';
 
 import Layout from './pages/Layout';
 import Loading from './components/Loading';
+import Home from './pages/Home';
 
-const Home = lazy(() => import('./pages/Home'));
 const NotFound = lazy(() => import('./pages/404'));
 const AddProduct = lazy(() => import('./pages/AddProduct'));
 
@@ -17,14 +17,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route
-            path="/"
-            element={
-              <Suspense fallback={<Loading />}>
-                <Home />
-              </Suspense>
-            }
-          />
+          <Route path="/" element={<Home />} />
           <Route
             path="/addproduct"
             element={
