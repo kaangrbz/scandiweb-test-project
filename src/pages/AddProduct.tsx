@@ -72,7 +72,7 @@ const AddProduct = () => {
                         id="sku"
                         name="sku"
                         placeholder="Enter SKU"
-                        inputmode="text"
+                        inputMode="text"
                       />
                       <ErrorMessage name="sku" className="no-border" component="div" />
                     </td>
@@ -85,7 +85,7 @@ const AddProduct = () => {
                         id="name"
                         name="name"
                         placeholder="Enter product name"
-                        inputmode="text"
+                        inputMode="text"
                       />
                       <ErrorMessage name="name" className="no-border" component="div" />
                     </td>
@@ -98,7 +98,7 @@ const AddProduct = () => {
                         id="price"
                         name="price"
                         placeholder="Enter price"
-                        inputmode="decimal"
+                        inputMode="decimal"
                       />
                       <ErrorMessage name="price" className="no-border" component="div" />
                     </td>
@@ -122,7 +122,7 @@ const AddProduct = () => {
                       <tr>
                         <td>Size (MB)</td>
                         <td>
-                          <Field type="number" id="size" name="size" inputmode="numeric" />
+                          <Field type="number" id="size" name="size" inputMode="numeric" />
                         </td>
                       </tr>
 
@@ -137,7 +137,7 @@ const AddProduct = () => {
                       <tr>
                         <td>Weight (kg)</td>
                         <td>
-                          <Field type="number" id="weight" name="weight" inputmode="numeric" />
+                          <Field type="number" id="weight" name="weight" inputMode="numeric" />
                         </td>
                       </tr>
 
@@ -152,19 +152,19 @@ const AddProduct = () => {
                       <tr>
                         <td>Height (CM)</td>
                         <td>
-                          <Field type="number" id="height" name="height" inputmode="numeric" />
+                          <Field type="number" id="height" name="height" inputMode="numeric" />
                         </td>
                       </tr>
                       <tr>
                         <td>Width (CM)</td>
                         <td>
-                          <Field type="number" id="width" name="width" inputmode="numeric" />
+                          <Field type="number" id="width" name="width" inputMode="numeric" />
                         </td>
                       </tr>
                       <tr>
                         <td>Length (CM)</td>
                         <td>
-                          <Field type="number" id="length" name="length" inputmode="numeric" />
+                          <Field type="number" id="length" name="length" inputMode="numeric" />
                         </td>
                       </tr>
                       <tr>

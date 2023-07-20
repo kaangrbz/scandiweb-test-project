@@ -29,7 +29,7 @@ const Product = ({product, onToggleProduct, checked}: ProductProps) => {
       <div className="product-content">
         <div>{product.sku}</div>
         <div>{product.name}</div>
-        <div>{product.price.toFixed(2)} $</div>
+        <div>{parseFloat(product.price.toString()).toFixed(2)} $</div>
         <div>{specifiedValue}</div>
       </div>
     </span>
